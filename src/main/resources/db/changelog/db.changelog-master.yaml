@@ -1,0 +1,11 @@
+#databaseChangeLog:
+#  - include:
+#      file: db/changelog/changes/001-create-account-entity.yaml
+#  - include:
+#      file: db/changelog/changes/002-create-friends.yaml
+#  - include:
+#      file: db/changelog/changes/003-create-subscribers.yaml
+#  - include:
+#      file: db/changelog/changes/004-create-account-friends-link.yaml
+#  - include:
+#      file: db/changelog/changes/005-create-account-subscribers-link.yaml

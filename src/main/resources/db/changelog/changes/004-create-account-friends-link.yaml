@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-account-friends-link
+      author: miron
+      changes:
+        - createTable:
+            tableName: AccountEntity_friends
+            columns:
+              - column:
+                  name: accountEntity_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: friends_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: AccountEntity_friends
+            baseColumnNames: accountEntity_id
+            constraintName: fk_accountentity_friends_account
+            referencedTableName: USER_ACCOUNT_TABLE
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: AccountEntity_friends
+            baseColumnNames: friends_id
+            constraintName: fk_accountentity_friends_friend
+            referencedTableName: FRIENDS_TABLE
+            referencedColumnNames: id

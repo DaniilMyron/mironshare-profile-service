@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-account-subscribers-link
+      author: miron
+      changes:
+        - createTable:
+            tableName: AccountEntity_subscribers
+            columns:
+              - column:
+                  name: accountEntity_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subscribers_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: AccountEntity_subscribers
+            baseColumnNames: accountEntity_id
+            constraintName: fk_accountentity_subscribers_account
+            referencedTableName: USER_ACCOUNT_TABLE
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: AccountEntity_subscribers
+            baseColumnNames: subscribers_id
+            constraintName: fk_accountentity_subscribers_subscriber
+            referencedTableName: SUBSCRIBERS_TABLE
+            referencedColumnNames: id

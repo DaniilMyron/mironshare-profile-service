@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-friends
+      author: miron
+      changes:
+        - createTable:
+            tableName: FRIENDS_TABLE
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

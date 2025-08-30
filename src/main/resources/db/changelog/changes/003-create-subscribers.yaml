@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-subscribers
+      author: miron
+      changes:
+        - createTable:
+            tableName: SUBSCRIBERS_TABLE
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

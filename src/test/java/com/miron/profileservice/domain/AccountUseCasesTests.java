@@ -12,12 +12,14 @@ import com.miron.profileservice.domain.usecases.impl.ChangeAccountPasswordUseCas
 import com.miron.profileservice.domain.usecases.impl.CreateAccountUseCase;
 import com.miron.profileservice.domain.usecases.impl.SubscribeOnUserUseCase;
 import com.miron.profileservice.infrastructure.config.EncoderImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+@Slf4j
 public class AccountUseCasesTests {
     private final static String FIRST_USERNAME = "mironn1";
     private final static String SECOND_USERNAME = "mironn2";
@@ -47,8 +49,10 @@ public class AccountUseCasesTests {
 
     @Test
     public void testChangeAccountPassword() {
+        var account = accountRepository.findByUsername(FIRST_USERNAME).orElseThrow();
+        log.info(account.getPassword());
         changeAccountPassword.execute(FIRST_USERNAME, "1234567890", "0987654321");
-        assertThat(accountRepository.findByUsername(FIRST_USERNAME).orElseThrow().getPassword()).isEqualTo("0987654321");
+        assertThat(accountRepository.findByUsername(FIRST_USERNAME).orElseThrow().getPassword()).isEqualTo(encoder.encode("0987654321"));
     }
 
     @Test

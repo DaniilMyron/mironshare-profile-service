@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-account-entity
+      author: miron
+      changes:
+        - createTable:
+            tableName: USER_ACCOUNT_TABLE
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: additional_information
+                  type: VARCHAR(1000)
+                  constraints:
+                    nullable: true

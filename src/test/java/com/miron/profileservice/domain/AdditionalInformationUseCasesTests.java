@@ -5,10 +5,12 @@ import com.miron.profileservice.domain.repository.AccountRepositoryInMemory;
 import com.miron.profileservice.domain.repository.AdditionalInformationRepositoryInMemory;
 import com.miron.profileservice.domain.spi.AccountRepository;
 import com.miron.profileservice.domain.spi.AdditionalInformationRepository;
+import com.miron.profileservice.domain.spi.BCryptEncoderForAccountPassword;
 import com.miron.profileservice.domain.usecases.CreateAccount;
 import com.miron.profileservice.domain.usecases.CreateAdditionalInformation;
 import com.miron.profileservice.domain.usecases.impl.CreateAccountUseCase;
 import com.miron.profileservice.domain.usecases.impl.CreateAdditionalInformationUseCase;
+import com.miron.profileservice.infrastructure.config.EncoderImpl;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,10 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AdditionalInformationUseCasesTests {
     private final static String FIRST_USERNAME = "mironn1";
     private final static String SECOND_USERNAME = "mironn2";
+    private BCryptEncoderForAccountPassword encoder = new EncoderImpl();
     private AccountRepository<Account> accountRepository = new AccountRepositoryInMemory();
     private AdditionalInformationRepository additionalInformationRepository = new AdditionalInformationRepositoryInMemory();
     private CreateAdditionalInformation createAdditionalInformationUseCase = new CreateAdditionalInformationUseCase(additionalInformationRepository, accountRepository);
-    private CreateAccount<Account> createAccountUseCase = new CreateAccountUseCase(accountRepository, null);
+    private CreateAccount<Account> createAccountUseCase = new CreateAccountUseCase(accountRepository, encoder);
 
     @BeforeEach
     public void setup() {

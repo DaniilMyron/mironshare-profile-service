@@ -3,11 +3,18 @@ package com.miron.profileservice.infrastructure.repo.entity;
 import com.miron.profileservice.domain.entity.Account;
 import com.miron.profileservice.domain.spi.BCryptEncoderForAccountPassword;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@Table(name = "USER_ACCOUNT_TABLE")
 public class AccountEntity extends Account {
     @Id
     private UUID id;
@@ -25,21 +32,5 @@ public class AccountEntity extends Account {
     }
 
     public AccountEntity() {
-    }
-
-    public List<Subscribers> getSubscribers() {
-        return subscribers;
-    }
-
-    public void setSubscribers(List<Subscribers> subscribers) {
-        this.subscribers = subscribers;
-    }
-
-    public List<Friends> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(List<Friends> friends) {
-        this.friends = friends;
     }
 }
