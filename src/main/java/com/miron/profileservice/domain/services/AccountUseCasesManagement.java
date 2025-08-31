@@ -16,17 +16,19 @@ public class AccountUseCasesManagement<T extends Account> implements AccountServ
     private final ChangeAccountPassword<T> changeAccountPasswordUseCase;
     private final SubscribeOnUser<T> subscribeOnUserUseCase;
     private final RetrieveUser<T> retrieveAccountUseCase;
+    private final CheckPassword checkPasswordUseCase;
 
     public AccountUseCasesManagement(CreateAccount<T> createAccountUseCase,
                                      ChangeAccountName<T> changeAccountNameUseCase,
                                      ChangeAccountPassword<T> changeAccountPasswordUseCase,
                                      SubscribeOnUser<T> subscribeOnUserUseCase,
-                                     RetrieveUser<T> retrieveAccountUseCase) {
+                                     RetrieveUser<T> retrieveAccountUseCase, CheckPassword checkPasswordUseCase) {
         this.createAccountUseCase = createAccountUseCase;
         this.changeAccountNameUseCase = changeAccountNameUseCase;
         this.changeAccountPasswordUseCase = changeAccountPasswordUseCase;
         this.subscribeOnUserUseCase = subscribeOnUserUseCase;
         this.retrieveAccountUseCase = retrieveAccountUseCase;
+        this.checkPasswordUseCase = checkPasswordUseCase;
     }
 
     @Override
@@ -61,5 +63,10 @@ public class AccountUseCasesManagement<T extends Account> implements AccountServ
     @Override
     public T subscribeOnUserById(UUID id, UUID userIdToSubscribeOn) {
         return subscribeOnUserUseCase.execute(id, userIdToSubscribeOn);
+    }
+
+    @Override
+    public boolean checkPassword(UUID id, String password) {
+        return checkPasswordUseCase.execute(id, password);
     }
 }

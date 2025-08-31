@@ -5,6 +5,22 @@ spring:
   application:
     name: profile-service
 
+  config:
+    import: optional:file:./secrets/application-secrets.yml
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8083/.well-known/jwks.json
+          issuer-uri: "http://localhost:8083"
+          keystore:
+            path: "file:./secrets/jwt-keys.p12"
+            type: "PKCS12"
+            password: "${jwt.keystore.password}"
+            key-alias: "jwt-signing"
+            key-password: "${jwt.keystore.key-password}"
+
   jpa:
     database: POSTGRESQL
     show-sql: true

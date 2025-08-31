@@ -1,18 +1,20 @@
 package com.miron.profileservice.domain.entity;
 
 import com.miron.profileservice.domain.valueObjects.*;
+import lombok.Setter;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+@Setter
 public class AdditionalInformation {
-    private final AdditionalInformationId additionalInformationId;
+    private AdditionalInformationId additionalInformationId;
     private AccountPicture accountPicture = new AccountPicture(null);
     private AgeInformation ageInformation = new AgeInformation(null);
     private GenderInformation genderInformation = GenderInformation.UNDEFINED;
     private AboutInformation aboutInformation = new AboutInformation(null);
 
-    private AdditionalInformation(){
+    public AdditionalInformation(){
         additionalInformationId = new AdditionalInformationId();
     }
 

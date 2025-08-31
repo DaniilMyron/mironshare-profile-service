@@ -5,18 +5,18 @@ import com.miron.profileservice.domain.valueObjects.AccountId;
 import com.miron.profileservice.domain.valueObjects.AccountName;
 import com.miron.profileservice.domain.valueObjects.AccountPassword;
 import com.miron.profileservice.domain.valueObjects.AccountUsername;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
+@Setter
 public class Account {
     private AccountId id;
     private AccountUsername username;
     private AccountPassword password;
     private AccountName accountName;
-    private List<Account> friends = new ArrayList<>();
-    private List<Account> subscribers = new ArrayList<>();
+    private Set<Account> friends = new HashSet<>();
+    private Set<Account> subscribers = new HashSet<>();
     private AdditionalInformation additionalInformation;
 
     public Account(String username, String password, String name, BCryptEncoderForAccountPassword encoder) {
@@ -24,6 +24,23 @@ public class Account {
         this.username = new AccountUsername(username);
         this.password = new AccountPassword(password, encoder);
         this.accountName = new AccountName(name);
+    }
+
+    public Account(AccountId id,
+                   String username,
+                   String password,
+                   String accountName,
+                   Set<Account> friends,
+                   Set<Account> subscribers,
+                   AdditionalInformation additionalInformation,
+                   BCryptEncoderForAccountPassword encoder) {
+        this.id = id;
+        this.username = new AccountUsername(username);
+        this.password = new AccountPassword(password, encoder);
+        this.accountName = new AccountName(accountName);
+        this.friends = friends;
+        this.subscribers = subscribers;
+        this.additionalInformation = additionalInformation;
     }
 
     public Account() {}
@@ -87,11 +104,11 @@ public class Account {
         return accountName.getValue();
     }
 
-    public List<Account> getAccountFriends() {
+    public Set<Account> getAccountFriends() {
         return friends;
     }
 
-    public List<Account> getAccountSubscribers() {
+    public Set<Account> getAccountSubscribers() {
         return subscribers;
     }
 

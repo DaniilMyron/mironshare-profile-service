@@ -13,4 +13,5 @@ public interface AccountService<T extends Account> {
     T changeNameById(UUID id, String accountName);
     T changePasswordById(UUID id, String oldPassword, String newPassword);
     T subscribeOnUserById(UUID id, UUID usernameToSubscribeOn);
+    boolean checkPassword(UUID id, String password);
 }

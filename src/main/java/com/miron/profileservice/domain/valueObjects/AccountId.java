@@ -9,6 +9,10 @@ public class AccountId implements ValueObject<UUID> {
         this.uuid = UUID.randomUUID();
     }
 
+    public AccountId(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     @Override
     public UUID getValue() {
         return this.uuid;

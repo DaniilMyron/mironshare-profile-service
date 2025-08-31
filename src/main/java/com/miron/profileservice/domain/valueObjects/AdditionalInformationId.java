@@ -8,6 +8,10 @@ public class AdditionalInformationId implements ValueObject<UUID> {
         this.id = UUID.randomUUID();
     }
 
+    public AdditionalInformationId(UUID id) {
+        this.id = id;
+    }
+
     @Override
     public UUID getValue() {
         return this.id;
