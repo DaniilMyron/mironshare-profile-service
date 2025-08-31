@@ -2,6 +2,8 @@ package com.miron.profileservice.domain.usecases;
 
 import com.miron.profileservice.domain.entity.AdditionalInformation;
 
+import java.util.UUID;
+
 public interface CreateAdditionalInformation {
-    AdditionalInformation execute(String username, String picture, Integer age, String gender, String about);
+    AdditionalInformation execute(UUID id, String picture, Integer age, String gender, String about);
 }

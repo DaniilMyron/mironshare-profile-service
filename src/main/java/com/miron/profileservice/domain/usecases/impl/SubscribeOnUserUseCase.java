@@ -5,6 +5,8 @@ import com.miron.profileservice.domain.spi.AccountRepository;
 import com.miron.profileservice.domain.springAnnotations.DomainUseCase;
 import com.miron.profileservice.domain.usecases.SubscribeOnUser;
 
+import java.util.UUID;
+
 @DomainUseCase
 public class SubscribeOnUserUseCase<T extends Account> implements SubscribeOnUser<T> {
     private final AccountRepository<T> accountRepository;
@@ -14,13 +16,19 @@ public class SubscribeOnUserUseCase<T extends Account> implements SubscribeOnUse
     }
 
     @Override
-    public T execute(String username, Account userToSubscribeOn) {
-        if(userToSubscribeOn.getUsername().equals(username)) {
+    public T execute(UUID id, UUID userIdToSubscribeOn) {
+        var user = accountRepository.findById(id)
+                .orElseThrow(IllegalArgumentException::new);
+
+        var userToSubscribeOn = accountRepository.findById(userIdToSubscribeOn)
+                .orElseThrow(IllegalArgumentException::new);
+
+        if(userToSubscribeOn.getUsername().equals(user.getUsername())) {
             throw new IllegalArgumentException("Cannot subscribe to yourself");
         }
-        var user = accountRepository.findByUsername(username)
-                .orElseThrow(IllegalArgumentException::new)
-                .subscribeOnUser(userToSubscribeOn);
+
+        user.subscribeOnUser(userToSubscribeOn);
+
         var userToSubscribeOnRepository = accountRepository.findById(userToSubscribeOn.getId())
                 .orElseThrow(IllegalArgumentException::new);
         accountRepository.save(userToSubscribeOnRepository);

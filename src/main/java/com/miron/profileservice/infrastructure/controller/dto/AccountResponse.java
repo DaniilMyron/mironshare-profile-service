@@ -1,8 +1,10 @@
 package com.miron.profileservice.infrastructure.controller.dto;
 
 import com.miron.profileservice.domain.entity.Account;
+import lombok.Getter;
 
 
+@Getter
 public class AccountResponse{
     private String accountUsername;
     private String accountName;
@@ -24,27 +26,4 @@ public class AccountResponse{
     public AccountResponse() {
     }
 
-    public String getAccountUsername() {
-        return accountUsername;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public String getAccountPicture() {
-        return accountPicture;
-    }
-
-    public Integer getUserAge() {
-        return userAge;
-    }
-
-    public String getUserGender() {
-        return userGender;
-    }
-
-    public String getUserAbout() {
-        return userAbout;
-    }
 }

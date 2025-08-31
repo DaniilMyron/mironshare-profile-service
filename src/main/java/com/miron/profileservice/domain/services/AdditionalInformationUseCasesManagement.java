@@ -4,6 +4,8 @@ import com.miron.profileservice.domain.api.AdditionalInformationService;
 import com.miron.profileservice.domain.entity.AdditionalInformation;
 import com.miron.profileservice.domain.usecases.CreateAdditionalInformation;
 
+import java.util.UUID;
+
 public class AdditionalInformationUseCasesManagement implements AdditionalInformationService {
     private final CreateAdditionalInformation createAdditionalInformationUseCase;
 
@@ -12,7 +14,7 @@ public class AdditionalInformationUseCasesManagement implements AdditionalInform
     }
 
     @Override
-    public AdditionalInformation createAdditionalInformation(String username, String picture, Integer age, String gender, String about) {
-        return createAdditionalInformationUseCase.execute(username, picture, age, gender, about);
+    public AdditionalInformation createAdditionalInformation(UUID id, String picture, Integer age, String gender, String about) {
+        return createAdditionalInformationUseCase.execute(id, picture, age, gender, about);
     }
 }

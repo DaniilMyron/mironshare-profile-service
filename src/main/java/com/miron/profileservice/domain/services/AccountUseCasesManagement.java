@@ -49,17 +49,17 @@ public class AccountUseCasesManagement<T extends Account> implements AccountServ
     }
 
     @Override
-    public T changeNameByUsername(String username, String accountName) {
-        return changeAccountNameUseCase.execute(username, accountName);
+    public T changeNameById(UUID id, String accountName) {
+        return changeAccountNameUseCase.execute(id, accountName);
     }
 
     @Override
-    public T changePasswordByUsername(String username, String oldPassword, String newPassword) {
-        return changeAccountPasswordUseCase.execute(username, oldPassword, newPassword);
+    public T changePasswordById(UUID id, String oldPassword, String newPassword) {
+        return changeAccountPasswordUseCase.execute(id, oldPassword, newPassword);
     }
 
     @Override
-    public T subscribeOnUserByUsername(String username, Account userToSubscribeOn) {
-        return subscribeOnUserUseCase.execute(username, userToSubscribeOn);
+    public T subscribeOnUserById(UUID id, UUID userIdToSubscribeOn) {
+        return subscribeOnUserUseCase.execute(id, userIdToSubscribeOn);
     }
 }

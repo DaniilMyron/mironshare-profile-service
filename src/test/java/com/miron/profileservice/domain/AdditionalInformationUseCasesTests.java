@@ -11,10 +11,11 @@ import com.miron.profileservice.domain.usecases.CreateAdditionalInformation;
 import com.miron.profileservice.domain.usecases.impl.CreateAccountUseCase;
 import com.miron.profileservice.domain.usecases.impl.CreateAdditionalInformationUseCase;
 import com.miron.profileservice.infrastructure.config.EncoderImpl;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,18 +27,24 @@ public class AdditionalInformationUseCasesTests {
     private AdditionalInformationRepository additionalInformationRepository = new AdditionalInformationRepositoryInMemory();
     private CreateAdditionalInformation createAdditionalInformationUseCase = new CreateAdditionalInformationUseCase(additionalInformationRepository, accountRepository);
     private CreateAccount<Account> createAccountUseCase = new CreateAccountUseCase(accountRepository, encoder);
+    private Account firstAccount;
+    private Account secondAccount;
+    private UUID firstUserId;
+    private UUID secondUserId;
 
     @BeforeEach
     public void setup() {
-        createAccountUseCase.execute(FIRST_USERNAME, "1234567890", "danya");
-        createAccountUseCase.execute(SECOND_USERNAME, "1234567890", "danya");
+        firstAccount = createAccountUseCase.execute(FIRST_USERNAME, "1234567890", "danya");
+        firstUserId = firstAccount.getId();
+        secondAccount = createAccountUseCase.execute(SECOND_USERNAME, "1234567890", "danya");
+        secondUserId = secondAccount.getId();
     }
 
     @Test
     public void createAdditionalInformationUseCaseTest() {
-        var account = accountRepository.findByUsername(FIRST_USERNAME).orElseThrow();
+        var account = accountRepository.findById(firstUserId).orElseThrow();
         assertThat(account.getAdditionalInformation()).isNull();
-        createAdditionalInformationUseCase.execute(FIRST_USERNAME, "SDADASD", 10, "MALE", "Something about me");
+        createAdditionalInformationUseCase.execute(firstUserId, "SDADASD", 10, "MALE", "Something about me");
         assertThat(account.getAdditionalInformation()).isNotNull();
 
         System.out.println(account.getAdditionalInformation().getAccountPicture());

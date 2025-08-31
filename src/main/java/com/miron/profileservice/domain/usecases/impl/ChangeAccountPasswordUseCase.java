@@ -6,6 +6,8 @@ import com.miron.profileservice.domain.spi.AccountRepository;
 import com.miron.profileservice.domain.springAnnotations.DomainUseCase;
 import com.miron.profileservice.domain.usecases.ChangeAccountPassword;
 
+import java.util.UUID;
+
 @DomainUseCase
 public class ChangeAccountPasswordUseCase<T extends Account> implements ChangeAccountPassword<T> {
     private final AccountRepository<T> accountRepository;
@@ -17,8 +19,8 @@ public class ChangeAccountPasswordUseCase<T extends Account> implements ChangeAc
     }
 
     @Override
-    public T execute(String username, String oldPassword, String newPassword) {
-        var account = accountRepository.findByUsername(username).orElseThrow(IllegalArgumentException::new);
+    public T execute(UUID id, String oldPassword, String newPassword) {
+        var account = accountRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return accountRepository.save(account.changeAccountPassword(oldPassword, newPassword, encoder));
     }
 }

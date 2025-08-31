@@ -14,6 +14,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
+
+    //TODO: CHANGE ALL USERNAMES FOR DEFINE USER TO AUTH
     private final AccountService<? extends Account> accountService;
     private final AccountMapper accountMapper;
 
@@ -39,7 +41,7 @@ public class ProfileController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AccountResponse> registrateUser(@RequestBody CreateAccountRequest createAccountRequest) {
+    public ResponseEntity<AccountResponse> registerUser(@RequestBody CreateAccountRequest createAccountRequest) {
         var account = accountService.createAccount(createAccountRequest.username(), createAccountRequest.password(), createAccountRequest.accountName());
         var response = accountMapper.toAccountResponse(account);
         return ResponseEntity.ok()
@@ -47,19 +49,30 @@ public class ProfileController {
     }
 
     @PutMapping("/change-account-name")
-    public ResponseEntity<AccountResponse> changeAccountName(@RequestBody ChangeAccountNameRequest changeAccountNameRequest){
-        var account = accountService.changeNameByUsername(changeAccountNameRequest.username(), changeAccountNameRequest.accountName());
+    public ResponseEntity<AccountResponse> changeAccountName(@RequestBody ChangeAccountNameRequest changeAccountNameRequest, @RequestParam UUID id){
+        var account = accountService.changeNameById(id, changeAccountNameRequest.accountName());
         var response = accountMapper.toAccountResponse(account);
         return ResponseEntity.ok()
                 .body(response);
     }
 
     @PutMapping("/change-account-password")
-    public ResponseEntity<AccountResponse> changeAccountPassword(@RequestBody ChangeAccountPasswordRequest changeAccountPasswordRequest){
-        var account = accountService.changePasswordByUsername(
-                changeAccountPasswordRequest.username(),
+    public ResponseEntity<AccountResponse> changeAccountPassword(@RequestBody ChangeAccountPasswordRequest changeAccountPasswordRequest, @RequestParam UUID id){
+        var account = accountService.changePasswordById(
+                id,
                 changeAccountPasswordRequest.oldPassword(),
                 changeAccountPasswordRequest.newPassword()
+        );
+        var response = accountMapper.toAccountResponse(account);
+        return ResponseEntity.ok()
+                .body(response);
+    }
+
+    @PutMapping("/subscribe-on-user")
+    public ResponseEntity<AccountResponse> subscribeOnUser(@RequestBody SubscribeOnUserRequest subscribeOnUserRequest, @RequestParam UUID id){
+        var account = accountService.subscribeOnUserById(
+                id,
+                subscribeOnUserRequest.id()
         );
         var response = accountMapper.toAccountResponse(account);
         return ResponseEntity.ok()

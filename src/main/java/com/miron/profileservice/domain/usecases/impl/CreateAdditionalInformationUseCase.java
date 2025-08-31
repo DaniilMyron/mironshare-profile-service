@@ -7,6 +7,8 @@ import com.miron.profileservice.domain.spi.AdditionalInformationRepository;
 import com.miron.profileservice.domain.springAnnotations.DomainUseCase;
 import com.miron.profileservice.domain.usecases.CreateAdditionalInformation;
 
+import java.util.UUID;
+
 @DomainUseCase
 public class CreateAdditionalInformationUseCase<T extends Account> implements CreateAdditionalInformation {
     private final AdditionalInformationRepository additionalInformationRepository;
@@ -18,14 +20,14 @@ public class CreateAdditionalInformationUseCase<T extends Account> implements Cr
     }
 
     @Override
-    public AdditionalInformation execute(String username, String picture, Integer age, String gender, String about) {
+    public AdditionalInformation execute(UUID id, String picture, Integer age, String gender, String about) {
         var additionalInformation = AdditionalInformation.Builder()
                 .setAccountPicture(picture)
                 .setAge(age)
                 .setGender(gender)
                 .setAbout(about)
                 .build();
-        accountRepository.save(accountRepository.findByUsername(username)
+        accountRepository.save(accountRepository.findById(id)
                 .orElseThrow()
                 .setAdditionalInformation(additionalInformation));
         return additionalInformationRepository.save(additionalInformation);
